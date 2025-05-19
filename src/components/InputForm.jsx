@@ -1,12 +1,10 @@
 import React from 'react'
 
-const InputForm = ({ setSearch, search, handleSearch }) => {
+const InputForm = ({ setSearch, search }) => {
     return (
-        <form
-            className="row my-3"
-            onSubmit={handleSearch}
-        >
-            <div className="col-11">
+        <form className="row my-3">
+            <div className="col text-center my-3">
+                <h2>Cerca un film per titolo</h2>
                 <input className="form-control"
                     type="text"
                     placeholder="Cerca per titolo"
@@ -14,12 +12,6 @@ const InputForm = ({ setSearch, search, handleSearch }) => {
                     onChange={setSearch}
                     value={search}
                 />
-            </div>
-            <div className="col-1 text-center">
-                <button className="btn btn-primary" type="submit">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                    Cerca
-                </button>
             </div>
         </form>
     )

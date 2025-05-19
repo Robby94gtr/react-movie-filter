@@ -3,29 +3,37 @@ import initialMovies from '../assets/movies.js'
 import MovieList from './MovieList.jsx'
 import SelectForm from './SelectForm.jsx'
 import InputForm from './InputForm.jsx'
+import AddNewItemForm from './AddNewItemForm.jsx'
 import { useState, useEffect } from 'react'
 
 const Main = () => {
 
     const [movies, setMovies] = useState(initialMovies)
 
-    const [filteredMovies, setFilteredMovies] = useState(initialMovies)
+    const [filteredMovies, setFilteredMovies] = useState(movies)
 
     const [selectedGenre, setSelectedGenre] = useState('');
 
     const [search, setSearch] = useState('');
 
+    const [newTitle, setNewTitle] = useState('');
+    const [newGenre, setNewGenre] = useState('');
+
     const handleSelect = (event) => {
         setSelectedGenre(event.target.value);
     };
 
-    const handleSearch = (event) => {
+    const addItem = (event) => {
         event.preventDefault();
-        const searchValue = event.target.value.toLowerCase();
-        const filteredArray = movies.filter((movie) => {
-            return movie.title.toLowerCase().includes(searchValue);
-        });
-        setFilteredMovies(filteredArray);
+        if (newTitle && newGenre) {
+            const newMovie = {
+                title: newTitle,
+                genre: newGenre
+            };
+            setFilteredMovies([...filteredMovies, newMovie]);
+            setNewTitle('');
+            setNewGenre('');
+        }
     }
 
     useEffect(() => {
@@ -50,29 +58,25 @@ const Main = () => {
     return (
         <main className="py-3">
             <div className="container">
+                <AddNewItemForm
+                    newTitle={newTitle}
+                    setNewTitle={(e) => setNewTitle(e.target.value)}
+                    newGenre={newGenre}
+                    setNewGenre={(e) => setNewGenre(e.target.value)}
+                    addItem={addItem}
+                />
                 <InputForm
                     setSearch={(e) => setSearch(e.target.value)}
                     search={search}
-                    handleSearch={(e) => handleSearch(e.target.value)}
                 />
-                <div className="row">
-                    <div className="col">
-                        <div className="card">
-                            <ul className="list-group list-group-flush">
-                                <MovieList movies={filteredMovies} />
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <SelectForm
-                            movies={initialMovies}
-                            handleSelect={(e) => handleSelect(e)}
-                            selectedGenre={selectedGenre}
-                        />
-                    </div>
-                </div>
+                <MovieList
+                    movies={filteredMovies}
+                />
+                <SelectForm
+                    movies={filteredMovies}
+                    handleSelect={(e) => handleSelect(e)}
+                    selectedGenre={selectedGenre}
+                />
             </div>
         </main>
     )
