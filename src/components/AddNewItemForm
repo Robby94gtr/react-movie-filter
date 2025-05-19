@@ -29,7 +29,7 @@ const AddNewItemForm = ({ newTitle, setNewTitle, newGenre, setNewGenre, addItem 
                     className="btn btn-primary"
                     onClick={addItem}
                 >
-                    <i class="fa-solid fa-plus"></i>
+                    <i className="fa-solid fa-plus"></i>
                     Aggiungi
                 </button>
             </div>

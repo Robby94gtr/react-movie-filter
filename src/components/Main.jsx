@@ -27,14 +27,18 @@ const Main = () => {
         event.preventDefault();
         if (newTitle && newGenre) {
             const newMovie = {
-                title: newTitle,
-                genre: newGenre
+                title: newTitle.trim(),
+                genre: newGenre.trim()
             };
-            setFilteredMovies([...filteredMovies, newMovie]);
+            setMovies([...movies, newMovie]);
             setNewTitle('');
             setNewGenre('');
         }
     }
+
+    useEffect(() => {
+        setFilteredMovies(movies)
+    }, [movies])
 
     useEffect(() => {
         const filteredArray = movies.filter((movie) => {
@@ -49,7 +53,7 @@ const Main = () => {
 
     useEffect(() => {
         const filteredArray = movies.filter((movie) => {
-            return movie.title.toLowerCase().includes(search.toLowerCase());
+            return movie.title.toLowerCase().includes(search.trim().toLowerCase());
         });
         setFilteredMovies(filteredArray);
     }, [search])
